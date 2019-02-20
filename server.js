@@ -24,9 +24,9 @@ if(req.method === 'GET'){
                     res.write('Server Error!');
                     return res.end();
                 }
-                res.writeHead(404, 'Page Not Found');
-                res.write(data);
-                return res.end();
+                    res.writeHead(404, 'Page Not Found');
+                    res.write(data);
+                    return res.end();
             });
         }else{
             res.writeHead(200, 'OK');
@@ -80,6 +80,22 @@ if(req.method === 'GET'){
                     res.writeHead(200, {'Content-Type': 'application/json'});
                     res.write(`{ "success : true }`);
                     res.end();
+                }
+            })
+            fs.readFile('./public/index.html', (err, data) => {
+                if(err){
+                    console.log(err);
+                }
+            });
+            
+            //UPDATE INDEX DURING POST
+            const indexHtml = `<ol><li>
+            <a href="./${parsedBody.elementName}.html">${parsedBody.elementName}</a>
+          </li>
+        </ol>`
+            fs.appendFile('./public/index.html', indexHtml, (err) => {
+                if(err){
+                    console.log(err)
                 }
             })
         })
